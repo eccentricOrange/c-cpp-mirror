@@ -23,8 +23,8 @@ class Matrix {
     /// @brief adds the given matrix to the current matrix, element by element
     /// @param matrix the input data
     /// @return the sum of the two matrices
-    Matrix<R, C> operator+(const Matrix<R, C>& addend) {
-        Matrix<R, C> returnMatrix;
+    Matrix operator+(const Matrix& addend) {
+        Matrix returnMatrix;
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
@@ -38,8 +38,8 @@ class Matrix {
     /// @brief subtracts the given matrix from the current matrix, element by element
     /// @param matrix the input data
     /// @return the difference of the two matrices
-    Matrix<R, C> operator-(Matrix<R, C> subtrahend) {
-        Matrix<R, C> returnMatrix;
+    Matrix operator-(Matrix subtrahend) {
+        Matrix returnMatrix;
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
@@ -54,8 +54,8 @@ class Matrix {
     /// @param matrix the input data
     /// @return the product of the two matrices
     /// @warning the number of columns of the first matrix must be equal to the number of rows of the second matrix. I'm unable to figure out a way to check this, since the number of rows and columns are template parameters
-    Matrix<R, C> operator*(Matrix<R, C> factor) {
-        Matrix<R, C> returnMatrix;
+    Matrix operator*(Matrix factor) {
+        Matrix returnMatrix;
 
         for (std::size_t k = 0; k < R; k++) {
             for (std::size_t i = 0; i < R; i++) {
@@ -102,7 +102,7 @@ class Matrix {
     }
 
     /// @brief prints the matrix to the given output stream
-    friend std::ostream& operator<<(std::ostream& out, const Matrix<R, C>& matrix) {
+    friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix) {
         out << "[" << R << 'x' << C << "]\n";
 
         for (std::size_t row = 0; row < R; row++) {
