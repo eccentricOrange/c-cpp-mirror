@@ -20,7 +20,8 @@
 				"GitHub.vscode-pull-request-github",
 				"VisualStudioExptTeam.vscodeintellicode",
 				"VisualStudioExptTeam.intellicode-api-usage-examples",
-				"mutantdino.resourcemonitor"
+				"mutantdino.resourcemonitor",
+				"ms-vscode.makefile-tools"
 			]
 		}
 	}
