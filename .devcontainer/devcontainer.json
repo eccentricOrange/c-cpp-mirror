@@ -2,8 +2,33 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/cpp
 {
 	"name": "C++",
-	"build": {
-		"dockerfile": "Dockerfile"
+	"image": "ubuntu:23.10",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": true,
+			"version": "latest"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot-chat",
+				"GitHub.copilot-labs",
+				"GitHub.copilot-nightly",
+				"GitHub.vscode-pull-request-github",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"mutantdino.resourcemonitor"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
