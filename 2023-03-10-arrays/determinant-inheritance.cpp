@@ -102,19 +102,22 @@ class Matrix {
         matrix[row][column] = value;
     }
 
-    /// @brief prints the matrix to the console
-    void printMatrix() {
-        printf("\n[%lux%lu] matrix\n", R, C);
+    /// @brief prints the matrix to the given output stream
+    friend std::ostream& operator<<(std::ostream& out, Matrix<R, C> matrix) {
+        out << "[" << R << 'x' << C << "]\n";
+
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
-                printf("%.0f\t", matrix[row][column]);
+                out << matrix[row][column] << '\t';
             }
 
-            printf("\n");
+            out << '\n';
         }
 
-        printf("\n");
+        out << '\n';
+
+        return out;
     }
 };
 
@@ -203,18 +206,20 @@ int main() {
                                      {9, -8, 7, 6},
                                      {5, 4, -3, -2}}});
 
-    matrixOne.printMatrix();
-    matrixTwo.printMatrix();
+    std::cout << "matrixOne "
+              << matrixOne;
 
-    printf("\nmatrixOne + matrixTwo\n");
-    (matrixOne + matrixTwo).printMatrix();
+    std::cout << "matrixTwo "
+              << matrixTwo;
 
-    printf("\nmatrixOne - matrixTwo\n");
-    (matrixOne - matrixTwo).printMatrix();
+    std::cout << "matrixOne + matrixTwo "
+              << matrixOne + matrixTwo;
 
-    printf("\nmatrixOne * matrixTwo\n");
-    (matrixOne * matrixTwo).printMatrix();
+    std::cout << "matrixOne - matrixTwo "
+              << matrixOne - matrixTwo;
 
-    printf("determinant of matrixOne: %.0f\n", matrixOne.getDeterminant());
-    printf("determinant of matrixTwo: %.0f\n", matrixTwo.getDeterminant());
+    std::cout << "matrixOne * matrixTwo "
+              << matrixOne * matrixTwo;
+
+    std::cout << "determinant of matrixOne: " << matrixOne.getDeterminant() << '\n';
 }
