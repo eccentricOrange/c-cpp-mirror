@@ -54,10 +54,11 @@ class Matrix {
     /// @param matrix the input data
     /// @return the product of the two matrices
     /// @warning the number of columns of the first matrix must be equal to the number of rows of the second matrix. I'm unable to figure out a way to check this, since the number of rows and columns are template parameters
-    Matrix<R, C> operator*(Matrix<R, C> factor) {
+    template <std::size_t RHC>
+    Matrix<R, RHC> operator*(Matrix<RHC, C> factor) {
         Matrix<R, C> returnMatrix;
 
-        for (std::size_t k = 0; k < R; k++) {
+        for (std::size_t k = 0; k < RHC; k++) {
             for (std::size_t i = 0; i < R; i++) {
                 for (std::size_t j = 0; j < C; j++) {
                     returnMatrix[i][j] += data[i][k] * factor.data[k][j];
