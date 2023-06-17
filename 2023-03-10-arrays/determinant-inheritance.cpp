@@ -1,5 +1,6 @@
 #include <array>
-#include <iostream>
+#include <cstdio>
+#include <stdexcept>
 
 template <std::size_t R, std::size_t C>
 class Matrix {
@@ -103,7 +104,7 @@ class Matrix {
 
     /// @brief prints the matrix to the console
     void printMatrix() {
-        printf("\n[%dx%d] matrix\n", R, C);
+        printf("\n[%lux%lu] matrix\n", R, C);
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
@@ -154,7 +155,7 @@ class SquareMatrix : public Matrix<N, N> {
         return returnMatrix;
     }
 
-    /// @brief calculates the determinant of the matrix. 
+    /// @brief calculates the determinant of the matrix.
     /// see Laplace expansion. https://en.wikipedia.org/wiki/Determinant#Laplace_expansion
     /// @return the determinant of the matrix
     double getDeterminant() {
@@ -175,7 +176,6 @@ class SquareMatrix : public Matrix<N, N> {
             int sign = 1;
 
             for (std::size_t dimension = 0; dimension < N; dimension++) {
-
                 // calculate cofactor and add to determinant
                 determinant += sign * this->matrix[0][dimension] * subMatrix(0, dimension).getDeterminant();
                 sign = -sign;
