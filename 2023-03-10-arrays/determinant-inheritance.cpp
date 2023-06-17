@@ -1,6 +1,5 @@
 #include <array>
-#include <cstdio>
-#include <stdexcept>
+#include <iostream>
 
 template <std::size_t R, std::size_t C>
 class Matrix {
@@ -105,7 +104,6 @@ class Matrix {
     /// @brief prints the matrix to the given output stream
     friend std::ostream& operator<<(std::ostream& out, Matrix<R, C> matrix) {
         out << "[" << R << 'x' << C << "]\n";
-
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
