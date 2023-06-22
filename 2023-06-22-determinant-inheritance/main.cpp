@@ -44,5 +44,5 @@ int main() {
 
     std::cout << "determinant of matrixTwo: " << getDeterminant(matrixTwo) << '\n';
 
-    std::cout << "matrixOne[2, 3]: " << matrixOne.at(2)[3] << '\n';
+    std::cout << "matrixOne[2, 3]: " << matrixOne.at(2, 3) << '\n';
 }

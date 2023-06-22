@@ -25,8 +25,24 @@ class Matrix {
         return data[row];
     }
 
+    constexpr const std::array<double, C>& operator[](std::size_t row) const {
+        return data[row];
+    }
+
     constexpr std::array<double, C>& at(std::size_t row) {
         return data.at(row);
+    }
+
+    constexpr const std::array<double, C>& at(std::size_t row) const {
+        return data.at(row);
+    }
+
+    constexpr double& at(std::size_t row, std::size_t column) {
+        return data.at(row).at(column);
+    }
+
+    constexpr const double& at(std::size_t row, std::size_t column) const {
+        return data.at(row).at(column);
     }
 
     friend Matrix operator+(const Matrix& lhs, const Matrix& rhs) {
