@@ -1,6 +1,6 @@
-#include <iostream>
 #include <array>
 #include <cmath>
+#include <iostream>
 
 #if !defined(DETERMINANT_INHERITANCE_H)
 #define DETERMINANT_INHERITANCE_H
@@ -18,14 +18,23 @@ class Matrix {
             }
         }
     }
+
     Matrix(std::array<std::array<double, C>, R> matrix) : data(matrix) {}
+
+    constexpr std::array<double, C>& operator[](std::size_t row) {
+        return data[row];
+    }
+
+    constexpr std::array<double, C>& at(std::size_t row) {
+        return data.at(row);
+    }
 
     friend Matrix operator+(const Matrix& lhs, const Matrix& rhs) {
         Matrix returnMatrix;
 
         for (std::size_t row = 0; row < R; row++) {
             for (std::size_t column = 0; column < C; column++) {
-                returnMatrix.data[row][column] = lhs.data[row][column] + rhs.data[row][column];
+                returnMatrix[row][column] = lhs.data[row][column] + rhs.data[row][column];
             }
         }
 
@@ -116,10 +125,6 @@ class Matrix {
         return rhs * lhs;
     }
 
-    std::array<double, C>& operator[](std::size_t row) {
-        return data[row];
-    }
-
     friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix) {
         out << "[" << R << 'x' << C << "]\n";
 
@@ -155,7 +160,7 @@ SquareMatrix<N - 1> subMatrix(SquareMatrix<N> matrix, std::size_t ignoreRow, std
     for (std::size_t matrixRow = 0; matrixRow < N; matrixRow++) {
         for (std::size_t matrixColumn = 0; matrixColumn < N; matrixColumn++) {
             if (matrixRow != ignoreRow && matrixColumn != ignoreColumn) {
-                returnMatrix[subMatrixRow][subMatrixColumn++] = matrix.data[matrixRow][matrixColumn];
+                returnMatrix[subMatrixRow][subMatrixColumn++] = matrix[matrixRow][matrixColumn];
 
                 if (subMatrixColumn == N - 1) {
                     subMatrixColumn = 0;
@@ -173,12 +178,12 @@ double getDeterminant(SquareMatrix<N> matrix) {
     double determinant = 0;
 
     if constexpr (N == 1) {
-        determinant = matrix.data[0][0];
+        determinant = matrix[0][0];
     } else if constexpr (N == 2) {
-        determinant = matrix.data[0][0] * matrix.data[1][1] - matrix.data[0][1] * matrix.data[1][0];
+        determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     } else if constexpr (N > 0) {
         for (std::size_t column = 0; column < N; column++) {
-            determinant += std::pow(-1, column) * matrix.data[0][column] * getDeterminant(subMatrix(matrix, 0, column));
+            determinant += std::pow(-1, column) * matrix[0][column] * getDeterminant(subMatrix(matrix, 0, column));
         }
     } else {
         throw std::invalid_argument("expected a square matrix");
