@@ -20,30 +20,80 @@ class Matrix {
     /// @param matrix the input data
     Matrix(std::array<std::array<double, C>, R> matrix) : data(matrix) {}
 
-    /// @brief adds the given matrix to the current matrix, element by element
-    /// @param matrix the input data
+    /// @brief adds the left hand side matrix to the right hand side matrix, element by element
+    /// @param lhs matrix 1
+    /// @param rhs matrix 2
     /// @return the sum of the two matrices
-    Matrix operator+(const Matrix& addend) {
-        Matrix returnMatrix;
+    friend Matrix<R, C> operator+(const Matrix& lhs, const Matrix& rhs) {
+        Matrix<R, C> returnMatrix;
 
-        for (std::size_t row = 0; row < R; row++) {
-            for (std::size_t column = 0; column < C; column++) {
-                returnMatrix[row][column] = data[row][column] + addend.data[row][column];
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs.data[row][column] + rhs.data[row][column];
             }
         }
 
         return returnMatrix;
     }
 
-    /// @brief subtracts the given matrix from the current matrix, element by element
-    /// @param matrix the input data
-    /// @return the difference of the two matrices
-    Matrix operator-(Matrix subtrahend) {
-        Matrix returnMatrix;
+    friend Matrix<R, C> operator+(double lhs, const Matrix& rhs) {
+        Matrix<R, C> returnMatrix;
 
-        for (std::size_t row = 0; row < R; row++) {
-            for (std::size_t column = 0; column < C; column++) {
-                returnMatrix[row][column] = data[row][column] - subtrahend.data[row][column];
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs + rhs.data[row][column];
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    friend Matrix<R, C> operator+(const Matrix& lhs, double rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs.data[row][column] + rhs;
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    /// @brief subtracts the right hand side matrix from the left hand side matrix, element by element
+    /// @param lhs matrix 1
+    /// @param rhs matrix 2
+    /// @return the difference of the two matrices
+    friend Matrix<R, C> operator-(const Matrix& lhs, const Matrix& rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs.data[row][column] - rhs.data[row][column];
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    friend Matrix<R, C> operator-(double lhs, const Matrix& rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs - rhs.data[row][column];
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    friend Matrix<R, C> operator-(const Matrix& lhs, double rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (size_t row = 0; row < R; row++) {
+            for (size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs.data[row][column] - rhs;
             }
         }
 
@@ -55,14 +105,38 @@ class Matrix {
     /// @return the product of the two matrices
     /// @warning the number of columns of the first matrix must be equal to the number of rows of the second matrix. I'm unable to figure out a way to check this, since the number of rows and columns are template parameters
     template <std::size_t RHC>
-    Matrix<R, RHC> operator*(const Matrix<RHC, C>& factor) {
+    friend Matrix<R, RHC> operator*(const Matrix<RHC, C>& lhs, const Matrix& rhs) {
         Matrix<R, C> returnMatrix;
 
         for (std::size_t k = 0; k < RHC; k++) {
             for (std::size_t i = 0; i < R; i++) {
                 for (std::size_t j = 0; j < C; j++) {
-                    returnMatrix[i][j] += data[i][k] * factor.data[k][j];
+                    returnMatrix[i][j] += lhs.data[i][k] * rhs.data[k][j];
                 }
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    friend Matrix<R, C> operator*(double lhs, const Matrix& rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (std::size_t row = 0; row < R; row++) {
+            for (std::size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs * rhs.data[row][column];
+            }
+        }
+
+        return returnMatrix;
+    }
+
+    friend Matrix<R, C> operator*(const Matrix& lhs, double rhs) {
+        Matrix<R, C> returnMatrix;
+
+        for (std::size_t row = 0; row < R; row++) {
+            for (std::size_t column = 0; column < C; column++) {
+                returnMatrix.data[row][column] = lhs.data[row][column] * rhs;
             }
         }
 
